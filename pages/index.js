@@ -1,8 +1,16 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import {withPageAuthRequired} from '@auth0/nextjs-auth0'
+
 import styles from '../styles/Home.module.css'
 
-export default function Home() {
+export const getServerSideProps = withPageAuthRequired({
+  getServerSideProps: () => ({
+    value: 'foo'
+  })
+})
+
+export default function Home({value}) {
   return (
     <div className={styles.container}>
       <Head>
@@ -15,6 +23,10 @@ export default function Home() {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
+
+        <div>
+          value = {value}
+        </div>
 
         <p className={styles.description}>
           Get started by editing{' '}
